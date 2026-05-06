@@ -1,0 +1,6 @@
+[submodule "tinker-atropos"]
+	path = tinker-atropos
+	url = https://github.com/nousresearch/tinker-atropos
+[submodule "tools/gbrain"]
+	path = tools/gbrain
+	url = https://github.com/garrytan/gbrain.git
