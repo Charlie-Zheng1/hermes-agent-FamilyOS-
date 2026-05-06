@@ -70,3 +70,36 @@ echo ""
 echo "Wiki location: $(pwd)/wiki/"
 echo "GBrain DB: ~/.gbrain/brain.pglite"
 echo ""
+
+# 7. Restore Hermes config from repo backup
+echo "[7/7] Restoring Hermes config..."
+if [ -d "config" ]; then
+    mkdir -p "$HOME/.hermes"
+    
+    # Restore config.yaml.example (with placeholders)
+    if [ -f "config/config.yaml.example" ]; then
+        cp config/config.yaml.example "$HOME/.hermes/config.yaml"
+        echo "✓ Created ~/.hermes/config.yaml (edit to add your API keys)"
+    fi
+    
+    # Restore skills
+    if [ -d "config/skills" ]; then
+        rsync -av config/skills/ "$HOME/.hermes/skills/"
+        echo "✓ Restored skills/ to ~/.hermes/"
+    fi
+    
+    echo ""
+    echo "⚠️  Don't forget to:"
+    echo "   1. Edit ~/.hermes/config.yaml and add your API keys"
+    echo "   2. Copy ~/.hermes/.env.example to ~/.hermes/.env and fill in secrets"
+else
+    echo "No config/ directory found, skipping config restore"
+fi
+
+echo ""
+echo "=== Setup complete! ==="
+echo "Next steps:"
+echo "1. Edit ~/.hermes/.env and add your API keys"
+echo "2. Edit ~/.hermes/config.yaml and configure providers"
+echo "3. Run: hermes (to start Hermes Agent)"
+echo "4. Run: cd tools/gbrain && gbrain query 'test' (to test GBrain)"
